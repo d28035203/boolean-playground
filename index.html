@@ -1,31 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="utf-8" />
- <title>Boolean Playground</title>
- <style>
- body { font-family: Georgia, serif; max-width: 520px; margin: 2rem auto; padding: 0 1rem; }
- table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
- td, th { border: 1px solid #444; padding: 0.4rem 0.6rem; text-align: center; }
- select, button { font-size: 1rem; margin: 0.25rem; }
- </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gate Garden</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #101418; color: #eaeaea; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { margin-bottom: 0.25rem; }
+    .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin: 1rem 0; }
+    select, button { background: #1c2430; color: #fff; border: 1px solid #334; border-radius: 6px; padding: 0.4rem 0.6rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #333; padding: 0.45rem 0.6rem; text-align: center; }
+    th { background: #1a222c; }
+    #out { font-size: 1.4rem; font-weight: 600; color: #7dcea0; }
+  </style>
 </head>
 <body>
- <h1>Boolean Playground</h1>
- <p>Pick a gate. Stare at truth. Pass digital logic.</p>
- <label>Gate:
- <select id="gate">
- <option>AND</option>
- <option>OR</option>
- <option>XOR</option>
- <option>NAND</option>
- <option>NOR</option>
- </select>
- </label>
- <table>
- <thead><tr><th>A</th><th>B</th><th>Out</th></tr></thead>
- <tbody id="rows"></tbody>
- </table>
- <script src="logic.js"></script>
+  <h1>Gate Garden</h1>
+  <p>2-input combinational gates with a live truth table.</p>
+  <div class="row">
+    <label>A <input type="checkbox" id="a" /></label>
+    <label>B <input type="checkbox" id="b" /></label>
+    <label>Gate
+      <select id="gate">
+        <option>AND</option><option>OR</option><option>XOR</option>
+        <option>NAND</option><option>NOR</option><option>XNOR</option>
+      </select>
+    </label>
+    <span>→ <span id="out">0</span></span>
+  </div>
+  <table>
+    <thead><tr><th>A</th><th>B</th><th id="col">AND</th></tr></thead>
+    <tbody id="tt"></tbody>
+  </table>
+  <script>
+    const ops = {
+      AND: (a,b) => a && b,
+      OR: (a,b) => a || b,
+      XOR: (a,b) => a !== b,
+      NAND: (a,b) => !(a && b),
+      NOR: (a,b) => !(a || b),
+      XNOR: (a,b) => a === b,
+    };
+    function evalGate() {
+      const g = document.getElementById('gate').value;
+      const a = document.getElementById('a').checked;
+      const b = document.getElementById('b').checked;
+      document.getElementById('out').textContent = ops[g](a,b) ? '1' : '0';
+      document.getElementById('col').textContent = g;
+      const tb = document.getElementById('tt');
+      tb.innerHTML = '';
+      for (const A of [0,1]) for (const B of [0,1]) {
+        const tr = document.createElement('tr');
+        const Y = ops[g](!!A, !!B) ? 1 : 0;
+        tr.innerHTML = `<td>${A}</td><td>${B}</td><td>${Y}</td>`;
+        tb.appendChild(tr);
+      }
+    }
+    ['a','b','gate'].forEach(id => document.getElementById(id).addEventListener('change', evalGate));
+    evalGate();
+  </script>
 </body>
 </html>

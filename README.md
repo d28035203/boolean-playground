@@ -1,9 +1,13 @@
 # Gate Garden
 
-**** Digital Logic Design — combinational gates.
+Interactive 2-input logic gates in the browser: AND, OR, XOR, NAND, NOR, XNOR with a live truth table.
 
-2-input AND / OR / XOR / NAND / NOR with a live truth table in the browser.
+## Run
 
-Open `index.html`.
+```bash
+open index.html
+```
 
-MIT · practice project
+## License
+
+MIT
