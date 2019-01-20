@@ -1,9 +1,9 @@
-# Boolean Playground
+# Gate Garden
 
-Clicky **2-input logic gates** in the browser.
+**** Digital Logic Design — combinational gates.
 
-AND, OR, XOR, NAND, NOR — truth table updates live. Digital logic practice without the hardware kit.
+2-input AND / OR / XOR / NAND / NOR with a live truth table in the browser.
 
-Open `index.html` in a browser.
+Open `index.html`.
 
-MIT · 2018–2019
+MIT · practice project
